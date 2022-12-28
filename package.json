@@ -1,0 +1,19 @@
+{
+	"name": "lol-draft-app",
+	"version": "1.0.0",
+	"description": "Drawing League of Legends draft",
+	"scripts": {
+		"start": "gulp"
+	},
+	"keywords": [],
+	"author": "Hubert Warchoł",
+	"license": "ISC",
+	"devDependencies": {
+		"browser-sync": "^2.27.11",
+		"gulp": "^4.0.2",
+		"gulp-sass": "^5.1.0",
+		"gulp-sourcemaps": "^3.0.0",
+		"gulp-terser": "^2.1.0",
+		"sass": "^1.57.1"
+	}
+}
