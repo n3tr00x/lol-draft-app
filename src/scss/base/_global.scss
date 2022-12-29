@@ -1,0 +1,10 @@
+@use '../utilities/colors';
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-family: sans-serif;
+	background-color: colors.$background;
+}
