@@ -20,7 +20,7 @@ const reload = done => {
 };
 
 const css = () => {
-	return src('src/scss/style.scss', { sourcemaps: true })
+	return src('src/scss/main.scss', { sourcemaps: true })
 		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
 		.pipe(dest('dist/css', { sourcemaps: '.' }))
 		.pipe(browserSync.stream());
@@ -39,7 +39,7 @@ const js = () => {
 };
 
 const watchTasks = () => {
-	watch('*.html', series(html, reload));
+	watch('src/*.html', series(html, reload));
 	watch(['src/scss/**/*.scss', 'src/js/**/*.js'], series(css, js, reload));
 };
 
