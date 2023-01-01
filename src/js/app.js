@@ -25,18 +25,18 @@ const randomizeChampion = role => {
 	return champion;
 };
 
-const run = () => {
+const run = async () => {
 	removeChampionComponent();
 	createChampionsContainer();
 	const roles = ['top', 'jungle', 'mid', 'adc', 'support'];
-	roles.forEach(role => {
+	for (const role of roles) {
 		const { id, name } = randomizeChampion(role);
 		const splashArtUrl = getChampionSplashArt(id);
-		createChampionComponent({
+		await createChampionComponent({
 			src: splashArtUrl,
 			name: name,
 		});
-	});
+	}
 	state = [...champions];
 };
 
