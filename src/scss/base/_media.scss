@@ -1,0 +1,15 @@
+@media (min-width: 1200px) {
+	header.header {
+		position: fixed;
+		bottom: auto;
+	}
+
+	.app {
+		min-height: 100vh;
+	}
+
+	.champions {
+		align-items: center;
+		min-height: inherit;
+	}
+}
