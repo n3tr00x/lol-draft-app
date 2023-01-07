@@ -5,6 +5,12 @@ html {
 }
 
 body {
-	font-family: sans-serif;
+	font-family: 'Montserrat', sans-serif;
 	background-color: colors.$background;
+}
+
+.wrapper {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
 }

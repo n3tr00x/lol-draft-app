@@ -1,0 +1,13 @@
+@use '../utilities/colors';
+
+.button {
+	padding: 1em 2em;
+	font-size: 1.4rem;
+	border: 0;
+
+	&--draw {
+		background-color: colors.$cta;
+		color: #fff;
+		border-radius: 8px;
+	}
+}

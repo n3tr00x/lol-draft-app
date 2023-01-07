@@ -1,9 +1,23 @@
 @use '../utilities/colors';
 
 .header {
-	font-size: 0.8rem;
-	padding: 3.2em;
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 2.4em 1.2em;
 	color: colors.$font;
 	background-color: colors.$main;
-	text-align: center;
+
+	&__container {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__title {
+		font-size: 2rem;
+		align-self: center;
+		text-align: center;
+	}
 }
