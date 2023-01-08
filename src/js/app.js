@@ -34,7 +34,8 @@ const run = async () => {
 		const splashArtUrl = getChampionSplashArt(id);
 		await createChampionComponent({
 			src: splashArtUrl,
-			name: name,
+			name,
+			role,
 		});
 	}
 	state = [...champions];

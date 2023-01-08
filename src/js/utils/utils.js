@@ -1,16 +1,18 @@
 const app = document.querySelector('.app');
 
-export const createChampionComponent = async ({ src, name }) => {
+export const createChampionComponent = async ({ src, name, role }) => {
 	try {
 		const div = document.createElement('div');
 		div.classList.add('champion');
 		div.setAttribute('id', `champion__${name}`);
 
-		const championName = createNameParagraph(name);
+		const championName = createChampionName(name);
 		const splashArt = await createImage(src);
+		const roleName = createRoleName(role);
 
-		div.appendChild(championName);
+		div.appendChild(roleName);
 		div.appendChild(splashArt);
+		div.appendChild(championName);
 
 		document.querySelector('.champions').appendChild(div);
 	} catch (error) {
@@ -42,10 +44,18 @@ const createImage = async src => {
 	});
 };
 
-const createNameParagraph = name => {
-	const p = document.createElement('h2');
+const createChampionName = name => {
+	const p = document.createElement('p');
 	p.classList.add('champion__name');
 	p.textContent = name;
 
 	return p;
+};
+
+const createRoleName = role => {
+	const h2 = document.createElement('h2');
+	h2.classList.add('champion__name');
+	h2.textContent = role.toUpperCase();
+
+	return h2;
 };
