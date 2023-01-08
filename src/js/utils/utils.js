@@ -23,8 +23,8 @@ export const createChampionComponent = async ({ src, name, role }) => {
 export const createChampionsContainer = () => {
 	const div = document.createElement('div');
 	div.classList.add('champions');
-
 	app.appendChild(div);
+
 	return div;
 };
 
