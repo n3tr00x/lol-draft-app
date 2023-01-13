@@ -54,7 +54,7 @@ const createChampionName = name => {
 
 const createRoleName = role => {
 	const h2 = document.createElement('h2');
-	h2.classList.add('champion__name');
+	h2.classList.add('champion__role');
 	h2.textContent = role.toUpperCase();
 
 	return h2;

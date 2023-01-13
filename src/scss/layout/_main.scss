@@ -6,8 +6,18 @@
 	min-height: 100vh;
 	padding: 4em 0;
 	text-align: center;
-}
 
-.champion__image {
-	max-width: 240px;
+	.champion {
+		&__role {
+			font-size: 1.8rem;
+		}
+
+		&__name {
+			font-size: 2rem;
+		}
+
+		&__image {
+			max-width: 240px;
+		}
+	}
 }
