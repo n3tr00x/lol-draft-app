@@ -1,4 +1,5 @@
 const app = document.querySelector('.app');
+const fragment = document.createDocumentFragment();
 
 export const createChampionComponent = async ({ src, name, role }) => {
 	try {
@@ -14,10 +15,15 @@ export const createChampionComponent = async ({ src, name, role }) => {
 		div.appendChild(splashArt);
 		div.appendChild(championName);
 
-		document.querySelector('.champions').appendChild(div);
+		return div;
 	} catch (error) {
 		console.error(error);
 	}
+};
+
+export const removeChampionComponent = () => {
+	if (document.querySelector('.champions'))
+		document.querySelector('.champions').remove();
 };
 
 export const createChampionsContainer = () => {
@@ -28,9 +34,30 @@ export const createChampionsContainer = () => {
 	return div;
 };
 
-export const removeChampionComponent = () => {
-	if (document.querySelector('.champions'))
-		document.querySelector('.champions').remove();
+export const handleLoading = isLoaded => {
+	if (isLoaded) {
+		document.querySelector('.loading').remove();
+		return;
+	}
+	const loading = createLoadingIcon();
+
+	app.appendChild(loading);
+};
+
+export const appendChampionsComponents = component => {
+	fragment.appendChild(component);
+};
+
+export const loadChampions = () => {
+	document.querySelector('.champions').appendChild(fragment);
+};
+
+const createLoadingIcon = () => {
+	const loading = document.createElement('p');
+	loading.classList.add('loading');
+	loading.textContent = 'Loading...';
+
+	return loading;
 };
 
 const createImage = async src => {

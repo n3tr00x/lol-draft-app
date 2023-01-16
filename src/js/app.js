@@ -1,7 +1,10 @@
 import champions from './champions/champions.js';
 import {
+	appendChampionsComponents,
 	createChampionComponent,
 	createChampionsContainer,
+	handleLoading,
+	loadChampions,
 	removeChampionComponent,
 } from './utils/utils.js';
 
@@ -28,18 +31,23 @@ const randomizeChampion = role => {
 const run = async () => {
 	removeChampionComponent();
 	createChampionsContainer();
+	handleLoading(false);
 	const roles = ['top', 'jungle', 'mid', 'adc', 'support'];
+
 	for (const role of roles) {
 		const { id, name } = randomizeChampion(role);
 		const splashArtUrl = getChampionSplashArt(id);
-		await createChampionComponent({
+		const champion = await createChampionComponent({
 			src: splashArtUrl,
 			name,
 			role,
 		});
+		appendChampionsComponents(champion);
 	}
+	loadChampions();
+	handleLoading(true);
 	state = [...champions];
 };
 
 run();
-document.querySelector('.button').addEventListener('click', run);
+document.querySelector('.button--draw').addEventListener('click', run);
