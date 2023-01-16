@@ -37,9 +37,13 @@ export const createChampionsContainer = () => {
 export const handleLoading = isLoaded => {
 	if (isLoaded) {
 		document.querySelector('.loading').remove();
+		document.querySelector('.button--draw').removeAttribute('disabled');
 		return;
 	}
 	const loading = createLoadingIcon();
+	document
+		.querySelector('.button--draw')
+		.setAttribute('disabled', 'disabled');
 
 	app.appendChild(loading);
 };
