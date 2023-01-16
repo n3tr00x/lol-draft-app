@@ -3,7 +3,9 @@
 	"version": "1.0.0",
 	"description": "Drawing League of Legends draft",
 	"scripts": {
-		"start": "gulp"
+		"clean": "rm -R dist",
+		"start": "npm run clean && gulp dev",
+		"build": "npm run clean && gulp prod"
 	},
 	"keywords": [],
 	"author": "Hubert Warchoł",
@@ -11,6 +13,7 @@
 	"devDependencies": {
 		"browser-sync": "^2.27.11",
 		"gulp": "^4.0.2",
+		"gulp-autoprefixer": "^8.0.0",
 		"gulp-sass": "^5.1.0",
 		"gulp-sourcemaps": "^3.0.0",
 		"gulp-terser": "^2.1.0",

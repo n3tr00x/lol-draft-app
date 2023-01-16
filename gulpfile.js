@@ -2,6 +2,7 @@ const { src, dest, watch, series } = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 const terser = require('gulp-terser');
+const autoprefixer = require('gulp-autoprefixer');
 const browserSync = require('browser-sync').create();
 
 const server = done => {
@@ -26,6 +27,14 @@ const css = () => {
 		.pipe(browserSync.stream());
 };
 
+const cssForProd = () => {
+	return src('src/scss/main.scss')
+		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+		.pipe(autoprefixer('last 2 versions'))
+		.pipe(dest('dist/css'))
+		.pipe(browserSync.stream());
+};
+
 const html = () => {
 	return src('src/index.html').pipe(dest('dist'));
 };
@@ -38,9 +47,14 @@ const js = () => {
 		.pipe(dest('dist/js'));
 };
 
+const jsForProd = () => {
+	return src('src/js/**/*.js').pipe(terser()).pipe(dest('dist/js'));
+};
+
 const watchTasks = () => {
 	watch('src/*.html', series(html, reload));
 	watch(['src/scss/**/*.scss', 'src/js/**/*.js'], series(css, js, reload));
 };
 
-exports.default = series(css, js, html, server, watchTasks);
+exports.dev = series(css, js, html, server, watchTasks);
+exports.prod = series(cssForProd, jsForProd, html, server);
