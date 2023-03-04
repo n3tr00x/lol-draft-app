@@ -13,14 +13,14 @@
 	"license": "ISC",
 	"devDependencies": {
 		"browser-sync": "^2.27.11",
+		"sass": "^1.57.1"
+	},
+	"dependencies": {
 		"gulp": "^4.0.2",
 		"gulp-autoprefixer": "^8.0.0",
 		"gulp-sass": "^5.1.0",
 		"gulp-sourcemaps": "^3.0.0",
 		"gulp-terser": "^2.1.0",
-		"sass": "^1.57.1"
-	},
-	"dependencies": {
 		"rimraf": "^4.2.0"
 	}
 }
