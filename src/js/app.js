@@ -11,9 +11,30 @@ import {
 const DATA_DRAGON_URL = 'http://ddragon.leagueoflegends.com/cdn';
 let state = [...champions];
 
-const getChampionSplashArt = id => {
-	const imageUrl = `${DATA_DRAGON_URL}/img/champion/loading/${id}_0.jpg`;
+const getChampionSplashArt = async id => {
+	const skinsNumbers = await getSkinsIds(id);
+	const skinNumber = randomizeSkinNumber(skinsNumbers);
+
+	const imageUrl = `${DATA_DRAGON_URL}/img/champion/loading/${id}_${skinNumber}.jpg`;
 	return imageUrl;
+};
+
+const getSkinsIds = async id => {
+	try {
+		const response = await fetch(
+			`${DATA_DRAGON_URL}/13.4.1/data/en_US/champion/${id}.json`
+		);
+		const data = await response.json();
+		const skins = data.data[id].skins;
+
+		return skins.map(skin => skin.num);
+	} catch (error) {
+		console.error('Błąd!');
+	}
+};
+
+const randomizeSkinNumber = skins => {
+	return skins[Math.floor(Math.random() * skins.length)];
 };
 
 const updateState = drawnChampion => {
@@ -36,7 +57,7 @@ const run = async () => {
 
 	for (const role of roles) {
 		const { id, name } = randomizeChampion(role);
-		const splashArtUrl = getChampionSplashArt(id);
+		const splashArtUrl = await getChampionSplashArt(id);
 		const champion = await createChampionComponent({
 			src: splashArtUrl,
 			name,
