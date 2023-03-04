@@ -21,13 +21,14 @@ const reload = done => {
 };
 
 const css = () => {
-	return src('src/scss/main.scss', { sourcemaps: true })
-		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-		.pipe(dest('dist/css', { sourcemaps: '.' }))
-		.pipe(browserSync.stream());
-};
-
-const cssForProd = () => {
+	if (process.env.NODE_ENV !== 'production') {
+		return src('src/scss/main.scss', { sourcemaps: true })
+			.pipe(
+				sass({ outputStyle: 'compressed' }).on('error', sass.logError)
+			)
+			.pipe(dest('dist/css', { sourcemaps: '.' }))
+			.pipe(browserSync.stream());
+	}
 	return src('src/scss/main.scss')
 		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
 		.pipe(autoprefixer('last 2 versions'))
@@ -40,21 +41,23 @@ const html = () => {
 };
 
 const js = () => {
-	return src('src/js/**/*.js')
-		.pipe(sourcemaps.init())
-		.pipe(terser())
-		.pipe(sourcemaps.write('.'))
-		.pipe(dest('dist/js'));
-};
-
-const jsForProd = () => {
+	if (process.env.NODE_ENV !== 'production') {
+		return src('src/js/**/*.js')
+			.pipe(sourcemaps.init())
+			.pipe(sourcemaps.write('.'))
+			.pipe(dest('dist/js'));
+	}
 	return src('src/js/**/*.js').pipe(terser()).pipe(dest('dist/js'));
 };
 
 const watchTasks = () => {
-	watch('src/*.html', series(html, reload));
-	watch(['src/scss/**/*.scss', 'src/js/**/*.js'], series(css, js, reload));
+	if (process.env.NODE_ENV !== 'production') {
+		watch('src/*.html', series(html, reload));
+		watch(
+			['src/scss/**/*.scss', 'src/js/**/*.js'],
+			series(css, js, reload)
+		);
+	}
 };
 
-exports.dev = series(css, js, html, server, watchTasks);
-exports.prod = series(cssForProd, jsForProd, html, server);
+exports.tasks = series(css, js, html, server, watchTasks);
