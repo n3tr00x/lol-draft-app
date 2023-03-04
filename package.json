@@ -5,7 +5,8 @@
 	"scripts": {
 		"clean": "rimraf dist",
 		"start": "set NODE_ENV=development&& npm run clean && gulp tasks",
-		"build": "set NODE_ENV=production&& npm run clean && gulp tasks"
+		"build": "set NODE_ENV=production&& npm run clean && gulp tasks",
+		"deploy": "npm run clean && gulp tasks"
 	},
 	"keywords": [],
 	"author": "Hubert Warchoł",
