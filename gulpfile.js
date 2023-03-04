@@ -13,8 +13,8 @@ const server = done => {
 			},
 			notify: false,
 		});
-		done();
 	}
+	done();
 };
 
 const reload = done => {
@@ -52,7 +52,7 @@ const js = () => {
 	return src('src/js/**/*.js').pipe(terser()).pipe(dest('dist/js'));
 };
 
-const watchTasks = () => {
+const watchTasks = done => {
 	if (process.env.NODE_ENV !== 'production') {
 		watch('src/*.html', series(html, reload));
 		watch(
@@ -60,6 +60,7 @@ const watchTasks = () => {
 			series(css, js, reload)
 		);
 	}
+	done();
 };
 
 exports.tasks = series(css, js, html, server, watchTasks);
