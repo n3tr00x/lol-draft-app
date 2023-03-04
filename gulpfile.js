@@ -6,13 +6,15 @@ const autoprefixer = require('gulp-autoprefixer');
 const browserSync = require('browser-sync').create();
 
 const server = done => {
-	browserSync.init({
-		server: {
-			baseDir: './dist',
-		},
-		notify: false,
-	});
-	done();
+	if (process.env.NODE_ENV !== 'production') {
+		browserSync.init({
+			server: {
+				baseDir: './dist',
+			},
+			notify: false,
+		});
+		done();
+	}
 };
 
 const reload = done => {
