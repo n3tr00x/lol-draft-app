@@ -6,6 +6,7 @@ import {
 	handleLoading,
 	loadChampions,
 	removeChampionComponent,
+	resolvePromisesForComponents,
 } from './utils/utils.js';
 
 const DATA_DRAGON_URL = 'http://ddragon.leagueoflegends.com/cdn';
@@ -50,21 +51,29 @@ const randomizeChampion = role => {
 };
 
 const run = async () => {
+	const roles = ['top', 'jungle', 'mid', 'adc', 'support'];
+	const components = [];
+
 	removeChampionComponent();
 	createChampionsContainer();
 	handleLoading(false);
-	const roles = ['top', 'jungle', 'mid', 'adc', 'support'];
 
 	for (const role of roles) {
 		const { id, name } = randomizeChampion(role);
 		const splashArtUrl = await getChampionSplashArt(id);
-		const champion = await createChampionComponent({
+		const champion = createChampionComponent({
 			src: splashArtUrl,
 			name,
 			role,
 		});
-		appendChampionsComponents(champion);
+		components.push(champion);
 	}
+	const loadedComponents = await resolvePromisesForComponents(components);
+
+	loadedComponents.forEach(component => {
+		appendChampionsComponents(component);
+	});
+
 	loadChampions();
 	handleLoading(true);
 	state = [...champions];

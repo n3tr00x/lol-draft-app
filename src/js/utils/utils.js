@@ -52,6 +52,10 @@ export const appendChampionsComponents = component => {
 	fragment.appendChild(component);
 };
 
+export const resolvePromisesForComponents = champions => {
+	return Promise.all(champions);
+};
+
 export const loadChampions = () => {
 	document.querySelector('.champions').appendChild(fragment);
 };
