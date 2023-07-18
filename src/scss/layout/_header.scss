@@ -1,4 +1,4 @@
-@use '../utilities/colors';
+@use '../base/variables' as var;
 
 .header {
 	position: sticky;
@@ -7,17 +7,15 @@
 	right: 0;
 	bottom: 0;
 	padding: 2.4em 1.2em;
-	color: colors.$font;
-	background-color: colors.$main;
+	color: var.$font;
+	background-color: var.$main;
 
 	&__container {
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 	}
 
 	&__title {
-		font-size: 2rem;
-		align-self: center;
-		text-align: center;
+		font-size: 1.8rem;
 	}
 }

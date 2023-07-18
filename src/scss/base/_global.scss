@@ -1,4 +1,4 @@
-@use '../utilities/colors';
+@use './variables' as var;
 
 html {
 	font-size: 62.5%;
@@ -6,7 +6,8 @@ html {
 
 body {
 	font-family: 'Montserrat', sans-serif;
-	background-color: colors.$background;
+	color: var.$font;
+	background-color: var.$background;
 }
 
 .wrapper {
