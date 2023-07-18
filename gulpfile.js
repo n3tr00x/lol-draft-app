@@ -1,19 +1,106 @@
-const { src, dest, watch, series } = require('gulp');
-const sass = require('gulp-sass')(require('sass'));
-const sourcemaps = require('gulp-sourcemaps');
-const terser = require('gulp-terser');
-const autoprefixer = require('gulp-autoprefixer');
-const browserSync = require('browser-sync').create();
+import gulp from 'gulp';
+import babel from 'gulp-babel';
+import htmlReplace from 'gulp-html-replace';
+import cleanCSS from 'gulp-clean-css';
+import sourcemaps from 'gulp-sourcemaps';
+import autoprefixer from 'gulp-autoprefixer';
+import { createGulpEsbuild } from 'gulp-esbuild';
+import gulpSass from 'gulp-sass';
+import * as scss from 'sass';
+import { deleteSync } from 'del';
+import { create } from 'browser-sync';
+
+const { src, dest, watch, series, parallel } = gulp;
+const esbuild = createGulpEsbuild({
+	piping: true,
+});
+const sass = gulpSass(scss);
+const browserSync = create();
+
+const paths = {
+	src: {
+		jsRoot: 'src/js/index.js',
+		js: 'src/js/**/*.js',
+		html: 'src/**/*.html',
+		css: 'src/scss/**/*.scss',
+	},
+	dist: {
+		root: 'dist',
+	},
+};
+
+const jsDev = () => {
+	return src(paths.src.js).pipe(dest(paths.dist.js));
+};
+
+const jsProd = () => {
+	return src(paths.src.jsRoot)
+		.pipe(
+			babel({
+				presets: ['@babel/env'],
+			})
+		)
+		.pipe(
+			esbuild({
+				outfile: 'bundle.js',
+				bundle: true,
+				minify: true,
+			})
+		)
+		.pipe(dest(paths.dist.root));
+};
+
+const cssDev = () => {
+	return src(paths.src.css)
+		.pipe(sourcemaps.init())
+		.pipe(sass().on('error', sass.logError))
+		.pipe(sourcemaps.write())
+		.pipe(dest(paths.dist.root))
+		.pipe(browserSync.stream());
+};
+
+const cssProd = () => {
+	return src(paths.src.css)
+		.pipe(sass().on('error', sass.logError))
+		.pipe(cleanCSS())
+		.pipe(autoprefixer())
+		.pipe(dest(paths.dist.root));
+};
+
+const htmlDev = () => {
+	return src(paths.src.html).pipe(dest(paths.dist.root));
+};
+
+const htmlProd = () => {
+	return src(paths.src.html)
+		.pipe(
+			htmlReplace({
+				js: {
+					src: './bundle.js',
+					tpl: '<script src="%s" defer></script>',
+				},
+			})
+		)
+		.pipe(dest(paths.dist.root));
+};
+
+const clean = done => {
+	deleteSync([paths.dist.root]);
+	done();
+};
 
 const server = done => {
-	if (process.env.NODE_ENV !== 'production') {
-		browserSync.init({
-			server: {
-				baseDir: './dist',
-			},
-			notify: false,
-		});
-	}
+	browserSync.init({
+		server: {
+			baseDir: paths.dist.root,
+		},
+		notify: false,
+	});
+
+	watch(paths.src.js, series(javascript, reload));
+	watch(paths.src.css, series(css, reload));
+	watch(paths.src.html, series(html, reload));
+
 	done();
 };
 
@@ -22,45 +109,6 @@ const reload = done => {
 	done();
 };
 
-const css = () => {
-	if (process.env.NODE_ENV !== 'production') {
-		return src('src/scss/main.scss', { sourcemaps: true })
-			.pipe(
-				sass({ outputStyle: 'compressed' }).on('error', sass.logError)
-			)
-			.pipe(dest('dist/css', { sourcemaps: '.' }))
-			.pipe(browserSync.stream());
-	}
-	return src('src/scss/main.scss')
-		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-		.pipe(autoprefixer('last 2 versions'))
-		.pipe(dest('dist/css'))
-		.pipe(browserSync.stream());
-};
+export default series(clean, parallel(jsDev, cssDev, htmlDev), server);
 
-const html = () => {
-	return src('src/index.html').pipe(dest('dist'));
-};
-
-const js = () => {
-	if (process.env.NODE_ENV !== 'production') {
-		return src('src/js/**/*.js')
-			.pipe(sourcemaps.init())
-			.pipe(sourcemaps.write('.'))
-			.pipe(dest('dist/js'));
-	}
-	return src('src/js/**/*.js').pipe(terser()).pipe(dest('dist/js'));
-};
-
-const watchTasks = done => {
-	if (process.env.NODE_ENV !== 'production') {
-		watch('src/*.html', series(html, reload));
-		watch(
-			['src/scss/**/*.scss', 'src/js/**/*.js'],
-			series(css, js, reload)
-		);
-	}
-	done();
-};
-
-exports.tasks = series(css, js, html, server, watchTasks);
+export const build = series(clean, parallel(jsProd, cssProd, htmlProd));
