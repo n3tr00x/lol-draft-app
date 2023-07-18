@@ -9,6 +9,7 @@ import gulpSass from 'gulp-sass';
 import * as scss from 'sass';
 import { deleteSync } from 'del';
 import { create } from 'browser-sync';
+import imagemin from 'gulp-imagemin';
 
 const { src, dest, watch, series, parallel } = gulp;
 const esbuild = createGulpEsbuild({
@@ -23,11 +24,17 @@ const paths = {
 		js: 'src/js/**/*.js',
 		html: 'src/**/*.html',
 		css: 'src/scss/**/*.scss',
+		assets: 'src/assets/*',
 	},
 	dist: {
 		root: 'dist',
 		js: 'dist/js',
+		assets: 'dist/assets',
 	},
+};
+
+const minifyImages = () => {
+	return src(paths.src.assets).pipe(imagemin()).pipe(dest(paths.dist.assets));
 };
 
 const jsDev = () => {
@@ -110,6 +117,13 @@ const reload = done => {
 	done();
 };
 
-export default series(clean, parallel(jsDev, cssDev, htmlDev), server);
+export default series(
+	clean,
+	parallel(jsDev, cssDev, htmlDev, minifyImages),
+	server
+);
 
-export const build = series(clean, parallel(jsProd, cssProd, htmlProd));
+export const build = series(
+	clean,
+	parallel(jsProd, cssProd, htmlProd, minifyImages)
+);
