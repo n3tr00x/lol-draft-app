@@ -7,18 +7,19 @@
 		"start": "gulp"
 	},
 	"dependencies": {
-		"@babel/preset-env": "^7.22.9",
 		"@babel/core": "^7.22.9",
-		"gulp": "^4.0.2",
-		"gulp-babel": "^8.0.0",
-		"gulp-esbuild": "^0.11.2",
-		"gulp-autoprefixer": "^8.0.0",
-		"gulp-clean-css": "^4.3.0",
-		"gulp-html-replace": "^1.6.2",
-		"gulp-sourcemaps": "^3.0.0",
-		"gulp-sass": "^5.1.0",
-		"sass": "^1.63.6",
+		"@babel/preset-env": "^7.22.9",
+		"browser-sync": "^2.29.3",
 		"del": "^7.0.0",
-		"browser-sync": "^2.29.3"
+		"gulp": "^4.0.2",
+		"gulp-autoprefixer": "^8.0.0",
+		"gulp-babel": "^8.0.0",
+		"gulp-clean-css": "^4.3.0",
+		"gulp-esbuild": "^0.11.2",
+		"gulp-html-replace": "^1.6.2",
+		"gulp-imagemin": "^8.0.0",
+		"gulp-sass": "^5.1.0",
+		"gulp-sourcemaps": "^3.0.0",
+		"sass": "^1.63.6"
 	}
 }
