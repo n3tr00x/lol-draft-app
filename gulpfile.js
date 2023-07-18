@@ -26,6 +26,7 @@ const paths = {
 	},
 	dist: {
 		root: 'dist',
+		js: 'dist/js',
 	},
 };
 
@@ -97,9 +98,9 @@ const server = done => {
 		notify: false,
 	});
 
-	watch(paths.src.js, series(javascript, reload));
-	watch(paths.src.css, series(css, reload));
-	watch(paths.src.html, series(html, reload));
+	watch(paths.src.js, series(jsDev, reload));
+	watch(paths.src.css, series(cssDev, reload));
+	watch(paths.src.html, series(htmlDev, reload));
 
 	done();
 };
