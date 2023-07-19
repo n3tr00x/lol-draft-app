@@ -1,6 +1,7 @@
 import createHTMLElement from '../../utils/createHTMLElement.js';
 import { drawnChampion } from '../../state/handleDraw.js';
 import { fetchChampionsSplashArt } from '../../utils/api.js';
+import Loader from '../loader/Loader.js';
 
 const DrawnChampions = () => {
 	const champions = renderChampions();
@@ -24,6 +25,7 @@ export const renderChampions = () => {
 
 	const getData = async () => {
 		try {
+			Loader(content, true);
 			const drawnChampions = roles.map(role => drawnChampion(role));
 			const [top, jungle, mid, adc, support] = drawnChampions;
 
@@ -51,6 +53,7 @@ export const renderChampions = () => {
 
 			const rawComponents = roles.map(componentsCallback);
 			const components = await Promise.all(rawComponents);
+			Loader(content, false);
 
 			components.forEach(component => content.appendChild(component));
 
