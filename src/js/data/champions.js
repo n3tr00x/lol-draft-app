@@ -1,5 +1,10 @@
-import Champion from './Champion.js';
-
+class Champion {
+	constructor(id, name, role) {
+		this.id = id;
+		this.name = name;
+		this.roles = role;
+	}
+}
 //Patch 13.4
 export default [
 	new Champion('Aatrox', 'Aatrox', ['top']),
