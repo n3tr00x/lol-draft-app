@@ -1,0 +1,27 @@
+.champions {
+	padding: 4rem 0;
+
+	&__content {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1.2em;
+		min-height: 100vh;
+		text-align: center;
+		color: #111;
+	}
+
+	.champion {
+		&__role {
+			font-size: 1.8rem;
+		}
+
+		&__name {
+			font-size: 2rem;
+		}
+
+		&__image {
+			max-width: 240px;
+		}
+	}
+}
