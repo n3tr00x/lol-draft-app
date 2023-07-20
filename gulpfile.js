@@ -102,6 +102,7 @@ const server = done => {
 		server: {
 			baseDir: paths.dist.root,
 		},
+		https: true,
 		notify: false,
 	});
 
