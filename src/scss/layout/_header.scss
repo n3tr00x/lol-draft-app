@@ -5,7 +5,6 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	bottom: 0;
 	padding: 2.4rem 1.2rem;
 	color: var.$font;
 	background-color: var.$main;
@@ -16,6 +15,23 @@
 	}
 
 	&__title {
+		align-self: center;
 		font-size: 1.8rem;
+	}
+}
+
+@media (min-width: 768px) {
+	.header {
+		padding: 2.4rem;
+	}
+
+	.header__container {
+		justify-content: space-between;
+	}
+}
+
+@media (min-width: 1200px) {
+	.header {
+		position: fixed;
 	}
 }

@@ -24,11 +24,21 @@
 		&--draw {
 			border-radius: 8px 0 0 8px;
 			background-color: var.$cta;
+			min-width: 180px;
 		}
 
 		&--save {
 			border-radius: 0 8px 8px 0;
 			background-color: var.$cta-secondary;
+			min-width: 120px;
 		}
+	}
+}
+
+@media (min-width: 768px) {
+	.navigation {
+		position: static;
+		background: none;
+		padding: 0;
 	}
 }

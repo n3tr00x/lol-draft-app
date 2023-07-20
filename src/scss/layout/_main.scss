@@ -1,3 +1,9 @@
 .main {
 	margin-bottom: 94px;
 }
+
+@media (min-width: 768px) {
+	.main {
+		margin-bottom: 0;
+	}
+}
