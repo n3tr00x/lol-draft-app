@@ -1,7 +1,9 @@
 import createHTMLElement from '../../utils/createHTMLElement.js';
-import { drawnChampion } from '../../state/handleDraw.js';
-import { fetchChampionsSplashArt } from '../../utils/api.js';
+import { drawnChampion } from '../../state/drawing.js';
+import { fetchChampionSplashArt } from '../../utils/api.js';
 import Loader from '../loader/Loader.js';
+import { setDraft } from '../../state/drafts.js';
+import loadImage from '../../utils/loadImage.js';
 
 const DrawnChampions = () => {
 	const champions = renderChampions();
@@ -29,12 +31,17 @@ export const renderChampions = () => {
 			const drawnChampions = roles.map(role => drawnChampion(role));
 			const [top, jungle, mid, adc, support] = drawnChampions;
 
+			setDraft({
+				id: Date.now(),
+				draft: [top, jungle, mid, adc, support],
+			});
+
 			const imagesLinks = await Promise.all([
-				fetchChampionsSplashArt(top.id),
-				fetchChampionsSplashArt(jungle.id),
-				fetchChampionsSplashArt(mid.id),
-				fetchChampionsSplashArt(adc.id),
-				fetchChampionsSplashArt(support.id),
+				fetchChampionSplashArt(top.id),
+				fetchChampionSplashArt(jungle.id),
+				fetchChampionSplashArt(mid.id),
+				fetchChampionSplashArt(adc.id),
+				fetchChampionSplashArt(support.id),
 			]);
 
 			const componentsCallback = async (role, index) => {
@@ -85,17 +92,6 @@ const ChampionComponent = async ({ id, name, role, link }) => {
 		attrs: {
 			['data-id']: id,
 		},
-	});
-};
-
-const loadImage = url => {
-	return new Promise((resolve, reject) => {
-		const img = new Image();
-		img.className = 'champion__image';
-		img.src = url;
-
-		img.onload = () => resolve(img);
-		img.onerror = error => reject(error);
 	});
 };
 
