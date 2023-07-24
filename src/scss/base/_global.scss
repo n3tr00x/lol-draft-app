@@ -10,6 +10,10 @@ body {
 	background-color: var.$background;
 }
 
+body.hidden {
+	overflow: hidden;
+}
+
 .wrapper {
 	width: 100%;
 	max-width: 1200px;

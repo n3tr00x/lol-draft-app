@@ -12,9 +12,9 @@
 
 	&__button {
 		width: 100%;
-		padding: 2rem 1rem;
+		padding: 1.6rem;
 		color: var.$font;
-		font-size: 1.4rem;
+		font-size: 1.2rem;
 		font-weight: 700;
 		text-transform: uppercase;
 		border: 0;
@@ -24,13 +24,18 @@
 		&--draw {
 			border-radius: 8px 0 0 8px;
 			background-color: var.$cta;
-			min-width: 180px;
+			min-width: 100px;
+		}
+
+		&--drafts {
+			background-color: var.$cta-secondary;
+			min-width: 140px;
 		}
 
 		&--save {
 			border-radius: 0 8px 8px 0;
-			background-color: var.$cta-secondary;
-			min-width: 120px;
+			background-color: var.$cta;
+			min-width: 100px;
 		}
 	}
 }
