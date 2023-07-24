@@ -1,6 +1,10 @@
 const DATA_DRAGON_URL = 'https://ddragon.leagueoflegends.com';
 
-export const fetchChampionsSplashArt = async championId => {
+export const fetchDefaultChampionSplashArt = championId => {
+	return `${DATA_DRAGON_URL}/cdn/img/champion/loading/${championId}_0.jpg`;
+};
+
+export const fetchChampionSplashArt = async championId => {
 	const skinId = await fetchSkinId(championId);
 
 	return `${DATA_DRAGON_URL}/cdn/img/champion/loading/${championId}_${skinId}.jpg`;
