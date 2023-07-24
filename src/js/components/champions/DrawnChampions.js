@@ -80,7 +80,7 @@ const ChampionComponent = async ({ id, name, role, link }) => {
 		className: 'champion__role',
 	});
 
-	const image = await loadImage(link);
+	const image = await loadImage(link, `${name} splash art`);
 
 	const championName = createHTMLElement('p', name, {
 		className: 'champion__name',
