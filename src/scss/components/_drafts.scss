@@ -44,6 +44,11 @@
 
 	&__content {
 		padding: 0 2rem 2rem 2rem;
+
+		.error {
+			font-size: 1.8rem;
+			text-align: center;
+		}
 	}
 
 	.draft {
@@ -62,14 +67,16 @@
 		img {
 			width: 100% !important;
 			aspect-ratio: 11 / 20;
-
-			&[alt='Heimerdinger splash art'] {
-				width: 2px;
-			}
 		}
 
 		&__remove-button {
 			display: block;
+			width: 100%;
+			padding: 1rem 0;
+			border: 0;
+			background-color: var.$red;
+			color: var.$font;
+			cursor: pointer;
 		}
 	}
 }
